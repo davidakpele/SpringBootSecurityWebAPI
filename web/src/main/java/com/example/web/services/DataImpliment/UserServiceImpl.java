@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserById(Long id) {
-        return userRepository.findById(Math.toIntExact(id)).orElse(null);
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(Long id, User user) {
-        User existingUser = userRepository.findById(Math.toIntExact(id)).orElse(null);
+        User existingUser = userRepository.findById(id).orElse(null);
         if (existingUser != null) {
             // Update the fields you want to change
             existingUser.setName(user.getName());
@@ -55,6 +55,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) {
-        userRepository.deleteById(Math.toIntExact(id));
+        userRepository.deleteById(id);
+    }
+
+
+    @Override
+    public User registerUser(User user) {
+        List<User> existingUsers = userRepository.findAll();
+
+        if (existingUsers.isEmpty()) {
+            user.setId(1001L);
+        } else {
+            // Find the maximum existing user ID
+            Long maxId = existingUsers.stream()
+                    .map(User::getId)
+                    .max(Long::compare)
+                    .orElse(0L);
+
+            // Set the new user ID
+            user.setId(maxId + 1);
+        }
+
+        return userRepository.save(user);
     }
 }

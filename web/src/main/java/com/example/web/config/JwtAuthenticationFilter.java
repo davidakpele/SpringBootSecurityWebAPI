@@ -1,6 +1,5 @@
 package com.example.web.config;
 
-import com.example.web.exceptions.AuthorizationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;

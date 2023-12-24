@@ -8,6 +8,8 @@ import com.example.web.model.User;
 import com.example.web.repository.UserRepository;
 import com.example.web.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user")
 public class ApiController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ApiController.class);
 
     private final UserService userService;
 
@@ -31,7 +35,7 @@ public class ApiController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object>  getUser(@PathVariable Long id, @RequestBody User user){
+    public ResponseEntity<Object>  getUser(@PathVariable Long id){
         try{
             // Check if the user with the given ID exists in the database
             User existingUser = userService.findUserById(id);
@@ -70,8 +74,9 @@ public class ApiController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> deleteUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
         try {
+            logger.info(String.valueOf(id));
             // Check if the user with the given ID exists in the database
             User existingUser = userService.findUserById(id);
             if (existingUser == null) {
@@ -84,6 +89,7 @@ public class ApiController {
                 return ResponseEntity.ok(successResponse);
             }
         } catch (Exception e) {
+
             ErrorResponse errorResponse = new ErrorResponse("Error updating user data: " + e.getMessage(), "500");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
