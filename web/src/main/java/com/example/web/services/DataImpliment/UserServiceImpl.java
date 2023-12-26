@@ -57,8 +57,6 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
-
-
     @Override
     public User registerUser(User user) {
         List<User> existingUsers = userRepository.findAll();
@@ -78,4 +76,12 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.save(user);
     }
+
+
+    @Override
+    public List<Long> checkUserIds(List<Long> userIds) {
+        List<User> existingUsers = userRepository.findAllById(userIds);
+        return existingUsers.stream().map(User::getId).collect(Collectors.toList());
+    }
+
 }

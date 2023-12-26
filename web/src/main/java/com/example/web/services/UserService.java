@@ -19,5 +19,6 @@ public interface UserService {
 
     User registerUser(User user);
 
+    List<Long> checkUserIds(List<Long> userIds);
 
 }
