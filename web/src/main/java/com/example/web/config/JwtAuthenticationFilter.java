@@ -1,6 +1,5 @@
 package com.example.web.config;
 
-import com.example.web.exceptions.AuthorizationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
@@ -55,6 +54,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+            }else{
+                System.out.println("Expired token");
             }
         }
         filterChain.doFilter(request, response);

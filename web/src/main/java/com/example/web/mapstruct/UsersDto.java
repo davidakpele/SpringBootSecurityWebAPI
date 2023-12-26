@@ -27,7 +27,6 @@ public class UsersDto {
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
 
-
     public static UsersDto fromEntity(User user) {
         UsersDto dto = new UsersDto();
         dto.setId(user.getId());

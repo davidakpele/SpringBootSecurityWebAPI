@@ -24,27 +24,23 @@ import java.util.List;
 
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private  String email;
+    private String email;
     private String password;
-    private  String address;
+    private String address;
     private String photoUrl;
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
-
     @Enumerated(EnumType.STRING)
     private Role role;
-
-
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
-
 
     @Override
     public String getUsername() {
