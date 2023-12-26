@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/auth")
 public class UserController {
 
     private final AuthenticationService service;
@@ -29,7 +29,7 @@ public class UserController {
         this.repository = repository;
     }
 
-    @PostMapping("/save")
+    @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody UsersDto request){
 
         // Check if email already exists
@@ -55,4 +55,5 @@ public class UserController {
         Optional<User> existingUsers =  repository.findByEmail(email);
         return existingUsers.isPresent();
     }
+
 }
